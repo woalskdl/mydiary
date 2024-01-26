@@ -8,6 +8,8 @@ import { Icon } from "../components/Icons";
 import { RemoteImage } from '../components/RemoteImage';
 import { Spacer } from "../components/Spacer";
 import { Typography } from "../components/Typography";
+import { stateDiaryList } from "../states/stateDiaryList";
+import { useRecoilValue } from 'recoil';
 
 export const DiaryListScreen = () => {
     const navigation = useNavigation();
@@ -22,40 +24,42 @@ export const DiaryListScreen = () => {
         navigation.navigate('AddDiary');
     }, [])
 
-    const [data, setData] = useState([
-        {
-            id:0,
-            title:'TITLE_0',
-            content:'CONTENT_0',
-            createdAt:'2024-01-01',
-            updatedAt:'2024-01-01',
-            imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
-        },
-        {
-            id:1,
-            title:'TITLE_1',
-            content:'CONTENT_1',
-            createdAt:'2024-01-01',
-            updatedAt:'2024-01-01',
-            imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
-        },
-        {
-            id:2,
-            title:'TITLE_2',
-            content:'CONTENT_2',
-            createdAt:'2024-01-01',
-            updatedAt:'2024-01-01',
-            imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
-        },
-        {
-            id:3,
-            title:'TITLE_3',
-            content:'CONTENT_3',
-            createdAt:'2024-01-01',
-            updatedAt:'2024-01-01',
-            imageUrl:null
-        },
-    ])
+    const data = useRecoilValue(stateDiaryList);
+
+    // const [data, setData] = useState([
+    //     {
+    //         id:0,
+    //         title:'TITLE_0',
+    //         content:'CONTENT_0',
+    //         createdAt:'2024-01-01',
+    //         updatedAt:'2024-01-01',
+    //         imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
+    //     },
+    //     {
+    //         id:1,
+    //         title:'TITLE_1',
+    //         content:'CONTENT_1',
+    //         createdAt:'2024-01-01',
+    //         updatedAt:'2024-01-01',
+    //         imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
+    //     },
+    //     {
+    //         id:2,
+    //         title:'TITLE_2',
+    //         content:'CONTENT_2',
+    //         createdAt:'2024-01-01',
+    //         updatedAt:'2024-01-01',
+    //         imageUrl:'https://docs.expo.dev/static/images/tutorial/background-image.png'
+    //     },
+    //     {
+    //         id:3,
+    //         title:'TITLE_3',
+    //         content:'CONTENT_3',
+    //         createdAt:'2024-01-01',
+    //         updatedAt:'2024-01-01',
+    //         imageUrl:null
+    //     },
+    // ])
 
     return (
         <View style={{ flex:1 }}>
@@ -80,7 +84,7 @@ export const DiaryListScreen = () => {
                                 navigation.navigate('DiaryDetail', {item})
                             }}>
                                 <View style={{ paddingVertical:12 }}>
-                                    {item.imageUrl && (
+                                    {typeof item.photoUrl !== 'undefined' && (
                                         <>
                                             <RemoteImage
                                                 url={item.imageUrl}
