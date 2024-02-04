@@ -10,6 +10,8 @@ import { RemoteImage } from "../components/RemoteImage";
 import { Typography } from "../components/Typography";
 import { useImagePickAndUpload } from "../hooks/useImagePickAndUpload";
 import database from '@react-native-firebase/database';
+import { Divider } from '../components/Divider';
+import { Icon } from "../components/Icons";
 
 export const SettingScreen = () => {
     const [userInfo, setUserInfo] = useRecoilState(stateUserInfo);
@@ -40,6 +42,16 @@ export const SettingScreen = () => {
         }
     }, [userInfo, runImagePickAndUpload])
 
+    const onPressAddPassword = useCallback(() => {
+        navigation.navigate('AddPassword');
+    }, []);
+
+    const onPressClearPassword = useCallback(() => {
+        database().ref(userDB).update({
+            password:'',
+        })
+    }, []);
+
     return (
         <View style={{ flex:1, paddingTop:32 }}>
             <Header>
@@ -63,6 +75,35 @@ export const SettingScreen = () => {
                     <Spacer space={20}/>
                     <Typography fontSize={20}>{userInfo.name}</Typography>
                 </View>
+
+                <Spacer space={20}/>
+                <Divider/>
+                <Spacer space={20}/>
+
+                <Button onPress={onPressAddPassword}>
+                    <View style={{ 
+                        flexDirection:'row', 
+                        alignItems:'center', 
+                        justifyContent: 'space-between',
+                        paddingVertical:12,
+                        paddingHorizontal:24,
+                    }}>
+                        <Typography fontSize={16}>비밀번호 추가</Typography>
+                        <Icon name='chevron-forward-outline' size={16}/>
+                    </View>
+                </Button>
+
+                <Button onPress={onPressClearPassword}>
+                    <View style={{ 
+                        flexDirection:'row', 
+                        alignItems:'center', 
+                        justifyContent: 'space-between',
+                        paddingVertical:12,
+                        paddingHorizontal:24,
+                    }}>
+                        <Typography fontSize={16}>비밀번호 초기화</Typography>
+                    </View>
+                </Button>
             </View>
         </View>
     )
